@@ -1,1 +1,0 @@
-/usr/bin/cc -rdynamic CMakeFiles/test_cmake.dir/main.c.o CMakeFiles/test_cmake.dir/GUI/cli/base.c.o -o test_cmake  -lcurses -lform 
