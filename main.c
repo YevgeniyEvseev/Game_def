@@ -8,13 +8,26 @@
 #include "define.h"
 
 int main() {
-  printf("%s", "Enter name user\n");
   char user_n[256] = {0};
+  int game_n = 0;
+  int key_enter = KEY_ENTER_CLICK_OFF;
+  printf("%s", "Enter name user\n");
+
   if (!scanf("%s", user_n)) {
     printf("Name is empty");
     return 1;
   }
+  set_param_ncurses();
+  while (!(game_n == EXIT && key_enter == KEY_ENTER_CLICK_ON)) {
+    key_enter = select_game(user_n, &game_n);
+    render_menu(user_n, game_n);
+  }
 
+  endwin();
+  return EXIT_SUCCESS;
+}
+
+void set_param_ncurses() {
   srand(time(NULL));
 
   // initialize the library
@@ -28,32 +41,21 @@ int main() {
   curs_set(FALSE);
   // getch() will be non-blocking
   nodelay(stdscr, TRUE);
+}
 
-  render_menu(user_n);
-  { /* code */
-
-    // draw field and matrix game
-    // render_game();
-    // game_loop(user_n);
-
-    /// refresh();
-    //   nanosleep(&ts, NULL);  // provides simple effect
-
-    // your code goes here
-    getchar();
-
-    // end curses
-    endwin();
-    return EXIT_SUCCESS;
+int select_game(const char* user_n, int* choice) {
+  int key = 0;
+  switch (key = getch()) {
+    case KEY_DOWN:
+      if (*choice < COUNT_MENU - 1) (*choice)++;
+      break;
+    case KEY_UP:
+      if (*choice > 0) (*choice)--;
+      break;
+    case 10:
+      key = KEY_ENTER_CLICK_ON;
+    default:
+      break;
   }
-
-  int render_menu(const char *user_n) {
-    int choice = 0;
-    while (/* condition */) {
-      mvprintw(TOP_MENU, LEFT_MENU, "LEGENG GAME\n");
-
-      for (int i = 0; i < COUNT_MENU; ++i) {
-        if (choice == i) }
-      // getchar();
-    }
-  }
+  return key;
+}
