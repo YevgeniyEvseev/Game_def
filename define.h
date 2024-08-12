@@ -26,5 +26,7 @@ void tetris(const char* user_n);
 void sea_batle(const char* user_n);
 void tanks(const char* user_n);
 void snake(const char* user_n);
+void tetris_consol(const char* user_n);
+void snake_consol(const char* user_n);
 
 #endif

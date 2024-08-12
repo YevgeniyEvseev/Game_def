@@ -19,10 +19,14 @@ int main() {
   }
   set_param_ncurses();
   while (!(game_n == EXIT && key_enter == KEY_ENTER_CLICK_ON)) {
+    void (*name_games[COUNT_MENU - 1])(const char*) = {
+        tetris_consol, tetris, snake_consol, snake, sea_batle, tanks};
     key_enter = select_game(user_n, &game_n);
     render_menu(user_n, game_n);
+    if (key_enter == KEY_ENTER_CLICK_ON && game_n < 6) {
+      name_games[game_n](user_n);
+    }
   }
-
   endwin();
   return EXIT_SUCCESS;
 }
