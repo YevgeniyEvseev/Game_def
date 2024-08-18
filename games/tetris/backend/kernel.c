@@ -1,7 +1,7 @@
 #include <ncurses.h>
 
-#include "../../define.h"
-#include "tetris.h"
+#include "../../../define.h"
+#include "../tetris.h"
 
 void init_game_info(GameInfo_t *data) {
   clear_matrix(data->field);
@@ -13,3 +13,6 @@ void init_game_info(GameInfo_t *data) {
   data->speed = 100;
   data->pause = 0;
 }
+
+void updateCurrentState(GameInfo_t *data, state_game *state, char *user,
+                        int input) {}

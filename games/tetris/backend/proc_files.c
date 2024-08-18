@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "tetris.h"
+#include "../tetris.h"
 /*
 int main() {
   GameInfo_t data;
@@ -21,7 +21,7 @@ int read_file(const char* user, int* offset) {
   int i = 0, high_score = 0;
   int status = FIND_CH;
   *offset = 0;
-  if ((file_user = fopen("user_data.txt", "r+")) == NULL) {
+  if ((file_user = fopen("user_data.txt", "r")) == NULL) {
     fprintf(stderr, "can not open file");
     return 0;
   }

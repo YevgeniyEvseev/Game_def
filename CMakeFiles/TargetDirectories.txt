@@ -1,0 +1,3 @@
+/home/dotharer/Documents/learn/GITHUB/Game_def/CMakeFiles/test_cmake.dir
+/home/dotharer/Documents/learn/GITHUB/Game_def/CMakeFiles/edit_cache.dir
+/home/dotharer/Documents/learn/GITHUB/Game_def/CMakeFiles/rebuild_cache.dir

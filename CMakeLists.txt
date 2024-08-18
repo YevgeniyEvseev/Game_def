@@ -13,6 +13,11 @@ add_executable("${PROJECT_NAME}"
     games/sea_batle/sea_batle.c
     games/snake/snake.c 
     games/tanks/tank.c
+    games/tetris/backend/kernel.c
+    games/tetris/backend/matrix_game.c 
+    games/tetris/backend/proc_files.c 
+    games/tetris/fronted/fronted.c 
+
 )
 
 target_link_libraries("${PROJECT_NAME}" ${CURSES_LIBRARIES})

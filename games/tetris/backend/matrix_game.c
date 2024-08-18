@@ -1,4 +1,4 @@
-#include "matrix.h"
+#include "../matrix.h"
 
 void clear_matrix(int matrix[][20]) {
   for (int i = 0; i < 10; i++) {
