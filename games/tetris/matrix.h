@@ -1,8 +1,11 @@
 #ifndef MATRIX_H
 #define MATRIX_H
 
-// #include "tetris.h"
+#include "tetris.h"
 
-void clear_matrix(int matrix[][20]);
+void clear_field(GameInfo_t *data);
+void clear_figure(figure *fig);
+
+void concat_matrix(GameInfo_t *data);
 
 #endif

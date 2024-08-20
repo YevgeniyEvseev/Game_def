@@ -21,7 +21,7 @@ int read_file(const char* user, int* offset) {
   int i = 0, high_score = 0;
   int status = FIND_CH;
   *offset = 0;
-  if ((file_user = fopen("user_data.txt", "r")) == NULL) {
+  if ((file_user = fopen("../user_data.txt", "r")) == NULL) {
     fprintf(stderr, "can not open file");
     return 0;
   }
@@ -69,7 +69,7 @@ void save_file(GameInfo_t* data, const char* user, int new_high_score,
   char n[7] = {0};
   int_to_str(new_high_score, n);
   if (data->high_score > new_high_score) return;
-  if ((file_user = fopen("user_data.txt", "r+")) == NULL) {
+  if ((file_user = fopen("../user_data.txt", "r+")) == NULL) {
     fprintf(stderr, "can not open file");
     return;
   }

@@ -4,6 +4,7 @@
 #include <time.h>
 
 #include "../../define.h"
+#include "fronted/define.h"
 
 void tetris(const char* user_n) {
   int flag_play = TRUE;
@@ -22,7 +23,8 @@ void tetris(const char* user_n) {
     updateCurrentState(&data, &state, user_n, input);
     if (data.speed == i) {
       i = 0;
-      state=SHIFTING;
+      state = SHIFTING;
+      updateCurrentState(&data, &state, user_n, input);
     }
     render_field(&data);
     nanosleep(&ts, NULL);

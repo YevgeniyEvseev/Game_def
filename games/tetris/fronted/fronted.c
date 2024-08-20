@@ -41,17 +41,43 @@ void draw_rectangle(int top, int bottom, int left, int right) {
 }
 
 void render_field(const GameInfo_t *data) {
-  int matrix_draw[10][20] = {0};
-  clear_matrix(matrix_draw);
-  add_matrix(matrix_draw, data->field, data->figure_m);
   for (int i = 0; i < 10; i++) {
     for (int j = 0; j < 20; j++) {
-      if (matrix_draw[i][j] == 1)
+      if (data->field[i][j] == 1)
         mvaddch(j + BEGIN_Y, i + BEGIN_X, ACS_BLOCK);
       else
         mvaddch(j + BEGIN_Y, i + BEGIN_X, ' ');
-      refresh();
     }
   }
-  render_game();
+  render_figure(&data->cur_figure);
+
+  refresh();
+}
+
+void render_figure(const figure *fig) {
+  for (int i = 0; i < 4; i++) {
+    for (int j = 0; j < 4; j++) {
+      int i_offset = fig->x_offset + i;
+      int j_offset = fig->y_offset + j;
+      if (fig->data[i][j] == 1)
+        mvaddch(j_offset + BEGIN_Y, i_offset + BEGIN_X, ACS_BLOCK);
+      else
+        mvaddch(j_offset + BEGIN_Y, i_offset + BEGIN_X, ' ');
+    }
+  }
+}
+
+void render_data(const GameInfo_t *data) {
+  render_figure(&data->new_figure);
+  print_info(data);
+}
+
+void print_info(const GameInfo_t *info) {
+  mvprintw(BOARD + 14, 18, "%d", info->high_score);  // high
+
+  mvprintw(BOARD + 11, 18, "%d", info->score);  // score
+
+  mvprintw(BOARD + 16, 18, "%d", 10 - info->speed / 5);  // speed
+
+  mvprintw(BOARD + 18, 18, "%d", info->level);  // level
 }
