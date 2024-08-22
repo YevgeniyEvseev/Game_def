@@ -15,8 +15,8 @@ void clear_figure(figure *fig) {
       fig->data[i][j] = 0;
     }
   }
-  fig->x_offset=0;
-  fig->y_offset=0;
+  fig->x_offset = 0;
+  fig->y_offset = 0;
 }
 
 void concat_matrix(GameInfo_t *data) {
@@ -31,22 +31,13 @@ void concat_matrix(GameInfo_t *data) {
   }
 }
 
-void move_matrix(int matrix[][20], int way) {
-  switch (way) {
-    case UP:
-      /* code */
-      break;
 
-    default:
-      break;
-  }
-}
-
-void matrix_offset(int matrix[][20], int x_offset, int y_offset) {
-  for (int i = 0; i < 10; i++) {
-    for (int j = 0; j < 20; j++) {
-      if (i + x_offset >= 10 || i + x_offset < 0) return;
-      matrix[i + x_offset][j + y_offset] = matrix[i][j];
+void copy_figure(figure *source, figure *dest) {
+  for (int i = 0; i < 4; ++i) {
+    for (int j = 0; j < 4; ++j) {
+      dest->data[i][j] = source->data[i][j];
     }
   }
+  dest->x_offset = 5;
+  dest->y_offset = 0;
 }

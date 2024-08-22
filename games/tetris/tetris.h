@@ -35,7 +35,7 @@ typedef enum {
 typedef enum {
   START = 0,
   SPAWN,
-  MOVING,
+  STANDBY,
   SHIFTING,
   ATTACHING,
   PAUSE,
@@ -54,4 +54,7 @@ void updateCurrentState(GameInfo_t *data, state_game *state, const char *user,
                         int input);
 UserAction_t userInput(int action);
 void spawn_new_figure(figure *fig);
+void controler_game(GameInfo_t *data, state_game *state, int input);
+int check_intersection(GameInfo_t *data);
+
 #endif

@@ -50,7 +50,7 @@ void set_param_ncurses() {
 int select_game(const char* user_n, int* choice) {
   int key = 0;
   switch (key = getch()) {
-    case KEY_DOWN:
+        case KEY_DOWN:
       if (*choice < COUNT_MENU - 1) (*choice)++;
       break;
     case KEY_UP:
