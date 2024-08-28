@@ -8,6 +8,14 @@
 #define KEY_ENTER_CLICK_ON 1
 #define KEY_ENTER_CLICK_OFF 0
 
+#define BOARD 2
+#define ROWS 20
+#define COLS 10
+#define BEGIN_X BOARD + 1
+#define END_X BEGIN_X + COLS
+#define BEGIN_Y BOARD + 1
+#define END_Y ROWS + BEGIN_Y
+
 typedef enum {
   TETRIS_CONSOL,
   TETRIS,

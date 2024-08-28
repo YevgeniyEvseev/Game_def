@@ -3,6 +3,8 @@
 
 enum status_find { FIND_CH, NEXT_STR, GET_NUMBER };
 
+enum intersection { NOT_ITR, LEFT_BOARD, RIGHT_BOARD, DOWN_BOARD, FIELD };
+
 typedef struct {
   int x_offset;
   int y_offset;
@@ -56,5 +58,5 @@ UserAction_t userInput(int action);
 void spawn_new_figure(figure *fig);
 void controler_game(GameInfo_t *data, state_game *state, int input);
 int check_intersection(GameInfo_t *data);
-
+void check_full_row(GameInfo_t *data);
 #endif

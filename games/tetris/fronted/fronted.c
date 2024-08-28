@@ -85,9 +85,9 @@ void print_info(const GameInfo_t *info) {
 
   mvprintw(BOARD + 11, 18, "%d", info->score);  // score
 
-  mvprintw(BOARD + 16, 18, "%d", 10 - info->speed / 5);  // speed
+  mvprintw(BOARD + 16, 18, "%d", 10 - info->speed);  // speed
 
-  mvprintw(BOARD + 18, 18, "%d", info->level);  // level
+  mvprintw(BOARD + 18, 18, "%d", info->speed);  // level
 }
 
 void render_game_over() {
@@ -95,4 +95,16 @@ void render_game_over() {
   mvprintw(BOARD + 10, 3, "                ");
   mvprintw(BOARD + 11, 3, "   GAME OVER    ");
   mvprintw(BOARD + 12, 3, "  -----------   ");
+  refresh();
+  nodelay(stdscr, FALSE);
+  getch();
+  nodelay(stdscr, TRUE);
+}
+
+void render_pause() {
+  mvprintw(BOARD + 8, 5, "Pause");
+  nodelay(stdscr, FALSE);
+  getch();
+  nodelay(stdscr, TRUE);
+  mvprintw(BOARD + 8, 5, "     ");
 }
