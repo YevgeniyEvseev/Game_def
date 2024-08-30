@@ -6,7 +6,7 @@
 #include "../../define.h"
 #include "fronted/define.h"
 
-void tetris(const char* user_n) {
+void tetris_consol(const char* user_n) {
   int flag_play = TRUE;
   GameInfo_t data;
   int offset_char_in_file = 0, i = 0;
@@ -27,7 +27,7 @@ void tetris(const char* user_n) {
       save_file(&data, user_n, data.score, offset_char_in_file);
     }
 
-    if (data.speed *10 == i) {
+    if (data.speed * 10 == i) {
       i = 0;
       state = SHIFTING;
       updateCurrentState(&data, &state, user_n, input);
@@ -38,4 +38,4 @@ void tetris(const char* user_n) {
   }
 }
 
-void tetris_consol(const char* user_n) {}
+void tetris(const char* user_n) {}
