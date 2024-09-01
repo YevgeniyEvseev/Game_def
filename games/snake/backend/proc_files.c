@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "../tetris.h"
+#include "../snake.h"
 
 int read_file(const char* user, int* offset) {
   FILE* file_user;
