@@ -1,9 +1,10 @@
 #ifndef SNAKE_H
 #define SNAKE_H
 
-enum status_find { FIND_CH, NEXT_STR, GET_NUMBER };
+#include "../../lib/lib_game.h"
 
 enum intersection { NOT_ITR, LEFT_BOARD, RIGHT_BOARD, DOWN_BOARD, FIELD };
+enum direct { TOP_WAY, RIGHT_WAY, DOWN_WAY, LEFT_WAY };
 
 typedef struct {
   int x;
@@ -12,51 +13,22 @@ typedef struct {
 
 typedef struct {
   int count;
-  Point snake[200];
+  int direction;
+  Point body[200];
 } figure;
 
 typedef struct {
-  Point eat;
+  Point food;
   figure cur_figure;
-  int score;
-  int high_score;
-  int level;
-  int speed;
-  int pause;
-} GameInfo_t;
+  GameInfo_t info;
+} Snake_t;
 
-typedef enum {
-  START_KEY,
-  PAUSE_KEY,
-  TERMINATE,
-  ROTATE,
-  LEFT,
-  RIGHT,
-  UP,
-  DOWN,
-  NOSIG
-} UserAction_t;
-
-typedef enum {
-  START = 0,
-  SPAWN,
-  STANDBY,
-  SHIFTING,
-  ATTACHING,
-  PAUSE,
-  GAMEOVER,
-  EXIT_STATE
-} state_game;
-
-void init_game_info(GameInfo_t *data);
-int read_file(const char *user, int *offset);
-void save_file(GameInfo_t *data, const char *user, int new_high_score,
-               int offset);
-void int_to_str(int src, char *str);
+void init_game_snake(Snake_t *data);
 
 void load_interface();
-void updateCurrentState(GameInfo_t *data, state_game *state, const char *user,
-                        int input);
-UserAction_t userInput(int action);
+void updateCurrentState_snake(Snake_t *data, state_game *state,
+                              const char *user, int input);
+void new_snake(figure *data);
+void new_food(Snake_t *food);
 
 #endif

@@ -1,15 +1,16 @@
+#include <ncurses.h>
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "../snake.h"
+#include "lib_game.h"
 
-int read_file(const char* user, int* offset) {
+int read_file(const char* user, char* PATH, int* offset) {
   FILE* file_user;
   int ch;
   int i = 0, high_score = 0;
   int status = FIND_CH;
   *offset = 0;
-  if ((file_user = fopen("games/tetris/user_data.txt", "r")) == NULL) {
+  if ((file_user = fopen(PATH, "r")) == NULL) {
     fprintf(stderr, "can not open file");
     return 0;
   }
@@ -50,14 +51,14 @@ int read_file(const char* user, int* offset) {
   return high_score;
 }
 
-void save_file(GameInfo_t* data, const char* user, int new_high_score,
-               int offset) {
+void save_file(GameInfo_t* data, char* PATH, const char* user,
+               int new_high_score, int offset) {
   FILE* file_user;
   long size;
   char n[7] = {0};
   int_to_str(new_high_score, n);
   if (data->high_score > new_high_score) return;
-  if ((file_user = fopen("games/tetris/user_data.txt", "r+")) == NULL) {
+  if ((file_user = fopen(PATH, "r+")) == NULL) {
     fprintf(stderr, "can not open file");
     return;
   }

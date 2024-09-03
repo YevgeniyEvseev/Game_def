@@ -3,12 +3,14 @@
 #include <ncurses.h>
 #include <time.h>
 
+#include "../../GUI/cli/interface_consol_game.h"
 #include "../../define.h"
 #include "fronted/define.h"
 
 void tetris_consol(const char* user_n) {
   int flag_play = TRUE;
-  GameInfo_t data;
+  Tetris data;
+  char* path = "games/tetris/user_data.txt";
   int offset_char_in_file = 0, i = 0;
   state_game state = START;
   struct timespec ts = {
@@ -16,18 +18,17 @@ void tetris_consol(const char* user_n) {
       .tv_nsec = 0.001 * 10 * 1000000000L  // nr of nanosecs
   };
   init_game_info(&data);
-  data.high_score = read_file(user_n, &offset_char_in_file);
-  data.score = 0;
+  data.info.high_score = read_file(user_n, path, &offset_char_in_file);
   load_interface();
   while (flag_play) {
     int input = getch();
     updateCurrentState(&data, &state, user_n, input);
     if (state == EXIT_STATE) {
       flag_play = false;
-      save_file(&data, user_n, data.score, offset_char_in_file);
+      save_file(&data.info, path, user_n, data.info.score, offset_char_in_file);
     }
 
-    if (data.speed * 10 == i) {
+    if (data.info.speed * 10 == i) {
       i = 0;
       state = SHIFTING;
       updateCurrentState(&data, &state, user_n, input);

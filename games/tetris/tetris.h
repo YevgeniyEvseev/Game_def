@@ -1,9 +1,7 @@
 #ifndef TETRIS_H
 #define TETRIS_H
 
-enum status_find { FIND_CH, NEXT_STR, GET_NUMBER };
-
-enum intersection { NOT_ITR, LEFT_BOARD, RIGHT_BOARD, DOWN_BOARD, FIELD };
+#include "../../lib/lib_game.h"
 
 typedef struct {
   int x_offset;
@@ -12,51 +10,20 @@ typedef struct {
 } figure;
 
 typedef struct {
-  int field[10][20];
   figure cur_figure;
   figure new_figure;
-  int score;
-  int high_score;
-  int level;
-  int speed;
-  int pause;
-} GameInfo_t;
+  GameInfo_t info;
+} Tetris;
 
-typedef enum {
-  START_KEY,
-  PAUSE_KEY,
-  TERMINATE,
-  ROTATE,
-  LEFT,
-  RIGHT,
-  UP,
-  DOWN,
-  NOSIG
-} UserAction_t;
+enum intersection { NOT_ITR, LEFT_BOARD, RIGHT_BOARD, DOWN_BOARD, FIELD };
 
-typedef enum {
-  START = 0,
-  SPAWN,
-  STANDBY,
-  SHIFTING,
-  ATTACHING,
-  PAUSE,
-  GAMEOVER,
-  EXIT_STATE
-} state_game;
+void init_game_info(Tetris *data);
 
-void init_game_info(GameInfo_t *data);
-int read_file(const char *user, int *offset);
-void save_file(GameInfo_t *data, const char *user, int new_high_score,
-               int offset);
-void int_to_str(int src, char *str);
-
-void load_interface();
-void updateCurrentState(GameInfo_t *data, state_game *state, const char *user,
+void updateCurrentState(Tetris *data, state_game *state, const char *user,
                         int input);
-UserAction_t userInput(int action);
+
 void spawn_new_figure(figure *fig);
-void controler_game(GameInfo_t *data, state_game *state, int input);
-int check_intersection(GameInfo_t *data);
-void check_full_row(GameInfo_t *data);
+void controler_game(Tetris *data, state_game *state, int input);
+int check_intersection(Tetris *data);
+void check_full_row(Tetris *data);
 #endif

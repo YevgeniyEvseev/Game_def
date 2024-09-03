@@ -1,21 +1,22 @@
 #include <ncurses.h>
 #include <stdlib.h>
 
+#include "../../../GUI/cli/interface_consol_game.h"
 #include "../../../define.h"
 #include "../fronted/define.h"
 #include "../matrix.h"
 #include "../tetris.h"
 
-void init_game_info(GameInfo_t *data) {
-  clear_field(data);
-  data->high_score = 0;
-  data->score = 0;
-  data->pause = 0;
-  data->level = 0;
-  data->speed = 10;
+void init_game_info(Tetris *data) {
+  clear_field(data->info.field);
+  data->info.high_score = 0;
+  data->info.score = 0;
+  data->info.pause = 0;
+  data->info.level = 0;
+  data->info.speed = 10;
 }
 
-void updateCurrentState(GameInfo_t *data, state_game *state, const char *user,
+void updateCurrentState(Tetris *data, state_game *state, const char *user,
                         int input) {
   switch (*state) {
     case START:
@@ -69,28 +70,6 @@ void updateCurrentState(GameInfo_t *data, state_game *state, const char *user,
   }
 }
 
-UserAction_t userInput(int action) {
-  UserAction_t rc = NOSIG;
-
-  if (action == KEY_UP)
-    rc = UP;
-  else if (action == KEY_DOWN)
-    rc = DOWN;
-  else if (action == KEY_LEFT)
-    rc = LEFT;
-  else if (action == KEY_RIGHT)
-    rc = RIGHT;
-  else if (action == ' ')
-    rc = ROTATE;
-  else if (action == KEY_ENTER)
-    rc = START_KEY;
-  else if (action == 'q' || action == 'Q')
-    rc = TERMINATE;
-  else if (action == KEY_HOME)
-    rc = PAUSE_KEY;
-  return rc;
-}
-
 void spawn_new_figure(figure *fig) {
   clear_figure(fig);
   int value = rand() % 7;
@@ -106,7 +85,7 @@ void spawn_new_figure(figure *fig) {
   fig->y_offset = 2;
 }
 
-void controler_game(GameInfo_t *data, state_game *state, int input) {
+void controler_game(Tetris *data, state_game *state, int input) {
   int old_offset_x = data->cur_figure.x_offset;
   int old_offset_y = data->cur_figure.y_offset;
   switch (userInput(input)) {
@@ -152,7 +131,7 @@ void controler_game(GameInfo_t *data, state_game *state, int input) {
   }
 }
 
-int check_intersection(GameInfo_t *data) {
+int check_intersection(Tetris *data) {
   for (int i = 0; i < 4; ++i) {
     for (int j = 0; j < 4; ++j) {
       int d_i = data->cur_figure.x_offset + i;
@@ -161,27 +140,27 @@ int check_intersection(GameInfo_t *data) {
         if (d_i < 0) return LEFT_BOARD;
         if (d_i > 9) return RIGHT_BOARD;
         if (d_j > 19) return DOWN_BOARD;
-        if (data->cur_figure.data[i][j] == data->field[d_i][d_j]) return FIELD;
+        if (data->cur_figure.data[i][j] == data->info.field[d_i][d_j]) return FIELD;
       }
     }
   }
   return NOT_ITR;
 }
 
-void check_full_row(GameInfo_t *data) {
+void check_full_row(Tetris *data) {
   int c_row = 0;
   for (int j = 20; j > 0; j--) {
     int sum = 0;
     for (int i = 0; i < 10; ++i) {
-      if (data->field[i][j] == 1) sum++;
+      if (data->info.field[i][j] == 1) sum++;
     }
     if (sum == 10) {
-      matrix_down_r(data->field, j);
+      matrix_down_r(data->info.field, j);
       c_row = 2 * c_row + 100;
-      data->speed = 10 - data->score / 600;
-      if (data->speed > 10) data->speed = 10;
+      data->info.speed = 10 - data->info.score / 600;
+      if (data->info.speed > 10) data->info.speed = 10;
       j++;
     }
   }
-  data->score += c_row;
+  data->info.score += c_row;
 }

@@ -3,13 +3,13 @@
 
 #include "tetris.h"
 
-void clear_field(GameInfo_t *data);
+
 void clear_figure(figure *fig);
 
-void concat_matrix(GameInfo_t *data);
+void concat_matrix(Tetris *data);
 void copy_figure(figure *source, figure *dest);
-int check_gameover(GameInfo_t *data);
-void rotate_matrix(GameInfo_t *data);
+int check_gameover(Tetris *data);
+void rotate_matrix(Tetris *data);
 void matrix_down_r(int matrix[][20], int row);
 
 #endif

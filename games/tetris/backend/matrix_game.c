@@ -1,13 +1,7 @@
 #include "../matrix.h"
 #include "../tetris.h"
 
-void clear_field(GameInfo_t *data) {
-  for (int i = 0; i < 10; i++) {
-    for (int j = 0; j < 20; j++) {
-      data->field[i][j] = 0;
-    }
-  }
-}
+
 
 void clear_matrix(int matrix_tmp[][4]) {
   for (int i = 0; i < 4; i++) {
@@ -23,13 +17,13 @@ void clear_figure(figure *fig) {
   fig->y_offset = 0;
 }
 
-void concat_matrix(GameInfo_t *data) {
+void concat_matrix(Tetris *data) {
   for (int i = 0; i < 4; i++) {
     for (int j = 0; j < 4; j++) {
       int i_offset = data->cur_figure.x_offset + i;
       int j_offset = data->cur_figure.y_offset + j;
       if (data->cur_figure.data[i][j] == 1) {
-        data->field[i_offset][j_offset] = data->cur_figure.data[i][j];
+        data->info.field[i_offset][j_offset] = data->cur_figure.data[i][j];
       }
     }
   }
@@ -49,14 +43,14 @@ void copy_figure(figure *source, figure *dest) {
   dest->y_offset = 0;
 }
 
-int check_gameover(GameInfo_t *data) {
+int check_gameover(Tetris *data) {
   for (int i = 0; i < 10; ++i) {
-    if (data->field[i][0] == 1) return 1;
+    if (data->info.field[i][0] == 1) return 1;
   }
   return 0;
 }
 
-void rotate_matrix(GameInfo_t *data) {
+void rotate_matrix(Tetris *data) {
   int x_c = 1, y_c = 2;
   int matrix_tmp[4][4];
 
