@@ -4,6 +4,7 @@
 #include <time.h>
 
 #include "../../define.h"
+#include "fronted/define.h"
 
 void snake(const char* user_n) {}
 
@@ -35,7 +36,7 @@ void snake_consol(const char* user_n) {
       state = SHIFTING;
       updateCurrentState_snake(&data, &state, user_n, input);
     }
-    // render_field(&data);
+    render_game_snake(&data);
     nanosleep(&ts, NULL);
     i++;
   }

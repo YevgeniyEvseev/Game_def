@@ -3,8 +3,16 @@
 
 #include "../../lib/lib_game.h"
 
-enum intersection { NOT_ITR, LEFT_BOARD, RIGHT_BOARD, DOWN_BOARD, FIELD };
-enum direct { TOP_WAY, RIGHT_WAY, DOWN_WAY, LEFT_WAY };
+enum intersection_t {
+  NOT_ITR,
+  FOOD,
+  BODY,
+  LEFT_BOARD,
+  RIGHT_BOARD,
+  UP_BOARD,
+  DOWN_BOARD
+};
+enum direct { UP_WAY, RIGHT_WAY, DOWN_WAY, LEFT_WAY };
 
 typedef struct {
   int x;
@@ -30,5 +38,11 @@ void updateCurrentState_snake(Snake_t *data, state_game *state,
                               const char *user, int input);
 void new_snake(figure *data);
 void new_food(Snake_t *food);
+void render_figure_to_field(Snake_t *data);
+void controler_game_snake(Snake_t *data, state_game *state, int input);
+void move_snake(Snake_t *data);
+void offset_matrix_snake(Snake_t *data, int x, int y);
+int check_intersection_snake(Snake_t *data);
+void grow_snake(Snake_t *data);
 
 #endif

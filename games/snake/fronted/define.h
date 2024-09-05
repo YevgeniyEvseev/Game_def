@@ -3,9 +3,7 @@
 
 #include "../snake.h"
 
-
-// void render_field(const GameInfo_t *data);
-
+void render_game_snake(const Snake_t *data);
 
 // void render_figure(const figure *fig);
 

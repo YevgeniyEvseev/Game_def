@@ -22,6 +22,7 @@ add_executable("${PROJECT_NAME}"
     #snake
     games/snake/snake.c 
     games/snake/backend/kernel.c
+    games/snake/fronted/fronted.c
     
     games/sea_batle/sea_batle.c
   

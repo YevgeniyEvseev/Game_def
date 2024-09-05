@@ -25,42 +25,41 @@ void updateCurrentState_snake(Snake_t *data, state_game *state,
   switch (*state) {
     case START:
       new_snake(&data->cur_figure);
-      new_food(&data->food);
-      *state = SPAWN;
+      data->food.x = 3;
+      data->food.y = 5;
+      *state = STANDBY;
       break;
-      /*
+
     case SPAWN:
-      copy_figure(&data->new_figure, &data->cur_figure);
-      spawn_new_figure(&data->new_figure);
-      if (check_intersection(data) != 0) {
-        *state = GAMEOVER;
-        return;
-      }
+      render_figure_to_field(data);
+      new_food(data);
+
       print_info(&data->info);
       *state = STANDBY;
-      controler_game(data, state, KEY_UP);
       break;
-      /*
+
     case STANDBY:
-      controler_game(data, state, input);
+      controler_game_snake(data, state, input);
       break;
+
     case SHIFTING:
-      ++data->cur_figure.y_offset;
-      if (check_intersection(data) != 0) {
-        --data->cur_figure.y_offset;
+      int event = 0;
+      move_snake(data);
+      if ((event = check_intersection_snake(data)) == FOOD) {
         *state = ATTACHING;
-      } else {
+      } else if (event == NOT_ITR) {
         *state = STANDBY;
+      } else {
+        *state = GAMEOVER;
       }
       break;
-    case ATTACHING:
-      concat_matrix(data);
-      check_full_row(data);
 
+    case ATTACHING:
+      grow_snake(data);
+      data->info.score += 100;
       *state = SPAWN;
-      if (check_gameover(data)) *state = GAMEOVER;
       break;
-      */
+
     case PAUSE:
       render_pause();
       *state = STANDBY;
@@ -81,9 +80,9 @@ void new_snake(figure *data) {
   data->count = 2;
   data->direction = LEFT_WAY;
   data->body[0].x = 5;
-  data->body[0].y = 10;
+  data->body[0].y = 5;
   data->body[1].x = 6;
-  data->body[1].y = 10;
+  data->body[1].y = 5;
 }
 
 void new_food(Snake_t *data) {
@@ -117,4 +116,118 @@ void new_food(Snake_t *data) {
     } else
       x++;
   }
+}
+
+void render_figure_to_field(Snake_t *data) {
+  clear_field(data->info.field);
+  for (int i = 0; i < data->cur_figure.count; ++i) {
+    int i_field = data->cur_figure.body[i].x;
+    int j_field = data->cur_figure.body[i].y;
+    data->info.field[i_field][j_field] = 1;
+  }
+}
+
+void controler_game_snake(Snake_t *data, state_game *state, int input) {
+  switch (userInput(input)) {
+    case TERMINATE:
+      *state = GAMEOVER;
+      break;
+    case UP:
+      if (data->cur_figure.direction != UP_WAY &&
+          data->cur_figure.direction != DOWN_WAY) {
+        data->cur_figure.direction = UP_WAY;
+      }
+      break;
+
+    case DOWN:
+      if (data->cur_figure.direction != UP_WAY &&
+          data->cur_figure.direction != DOWN_WAY) {
+        data->cur_figure.direction = DOWN_WAY;
+      }
+      break;
+
+    case LEFT:
+      if (data->cur_figure.direction != LEFT_WAY &&
+          data->cur_figure.direction != RIGHT_WAY) {
+        data->cur_figure.direction = LEFT_WAY;
+      }
+      break;
+
+    case RIGHT:
+      if (data->cur_figure.direction != LEFT_WAY &&
+          data->cur_figure.direction != RIGHT_WAY) {
+        data->cur_figure.direction = RIGHT_WAY;
+      }
+      break;
+
+    case ROTATE:
+      *state = SHIFTING;
+      break;
+
+    case PAUSE_KEY:
+      *state = PAUSE;
+      break;
+
+    default:
+      break;
+  }
+}
+
+void offset_matrix_snake(Snake_t *data, int x, int y) {
+  for (int i = data->cur_figure.count - 1; i > 0; i--) {
+    data->cur_figure.body[i].x = data->cur_figure.body[i - 1].x;
+    data->cur_figure.body[i].y = data->cur_figure.body[i - 1].y;
+  }
+  data->cur_figure.body[0].x += x;
+  data->cur_figure.body[0].y += y;
+}
+
+void move_snake(Snake_t *data) {
+  int x = 0, y = 0;
+  switch (data->cur_figure.direction) {
+    case UP_WAY:
+      y--;
+      break;
+    case DOWN_WAY:
+      y++;
+      break;
+    case LEFT_WAY:
+      x--;
+      break;
+    case RIGHT_WAY:
+      x++;
+      break;
+    default:
+      break;
+  }
+  offset_matrix_snake(data, x, y);
+}
+
+int check_intersection_snake(Snake_t *data) {
+  if (data->cur_figure.body[0].x < 0) return LEFT_BOARD;
+  if (data->cur_figure.body[0].x > 9) return RIGHT_BOARD;
+  if (data->cur_figure.body[0].y > 19) return DOWN_BOARD;
+  if (data->cur_figure.body[0].y < 0) return UP_BOARD;
+
+  if (data->cur_figure.body[0].x == data->food.x &&
+      data->cur_figure.body[0].y == data->food.y)
+    return FOOD;
+  for (int i = 2; i < data->cur_figure.count; ++i) {
+    if (data->cur_figure.body[0].x == data->cur_figure.body[i].x &&
+        data->cur_figure.body[0].y == data->cur_figure.body[i].y)
+      return BODY;
+  }
+
+  return NOT_ITR;
+}
+
+void grow_snake(Snake_t *data) {
+  Point tmp;
+  int lenght = data->cur_figure.count;
+  tmp.x = data->cur_figure.body[lenght - 1].x;
+  tmp.y = data->cur_figure.body[lenght - 1].y;
+  move_snake(data);
+  data->cur_figure.count++;
+  data->cur_figure.body[lenght].x = tmp.x;
+  data->cur_figure.body[lenght].y = tmp.y;
 }
