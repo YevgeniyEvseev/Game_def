@@ -43,6 +43,6 @@ void controler_game_snake(Snake_t *data, state_game *state, int input);
 void move_snake(Snake_t *data);
 void offset_matrix_snake(Snake_t *data, int x, int y);
 int check_intersection_snake(Snake_t *data);
-void grow_snake(Snake_t *data);
+void grow_snake(Snake_t *data, Point *last_p);
 
 #endif

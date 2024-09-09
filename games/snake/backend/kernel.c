@@ -44,8 +44,12 @@ void updateCurrentState_snake(Snake_t *data, state_game *state,
 
     case SHIFTING:
       int event = 0;
+      Point last_p;
+      last_p.x = data->cur_figure.body[data->cur_figure.count - 1].x;
+      last_p.y = data->cur_figure.body[data->cur_figure.count - 1].y;
       move_snake(data);
       if ((event = check_intersection_snake(data)) == FOOD) {
+        grow_snake(data, &last_p);
         *state = ATTACHING;
       } else if (event == NOT_ITR) {
         *state = STANDBY;
@@ -55,7 +59,6 @@ void updateCurrentState_snake(Snake_t *data, state_game *state,
       break;
 
     case ATTACHING:
-      grow_snake(data);
       data->info.score += 100;
       *state = SPAWN;
       break;
@@ -221,13 +224,9 @@ int check_intersection_snake(Snake_t *data) {
   return NOT_ITR;
 }
 
-void grow_snake(Snake_t *data) {
-  Point tmp;
+void grow_snake(Snake_t *data, Point *last) {
   int lenght = data->cur_figure.count;
-  tmp.x = data->cur_figure.body[lenght - 1].x;
-  tmp.y = data->cur_figure.body[lenght - 1].y;
-  move_snake(data);
   data->cur_figure.count++;
-  data->cur_figure.body[lenght].x = tmp.x;
-  data->cur_figure.body[lenght].y = tmp.y;
+  data->cur_figure.body[lenght].x = last->x;
+  data->cur_figure.body[lenght].y = last->y;
 }

@@ -6,9 +6,9 @@
 #include "../../define.h"
 #include "fronted/define.h"
 
-void snake(const char* user_n) {}
 
-void snake_consol(const char* user_n) {
+
+void snake_consol(const char* user_n, int argc, char* argv[]) {
   int flag_play = TRUE;
   Snake_t data;
   char* path = "games/snake/user_data.txt";

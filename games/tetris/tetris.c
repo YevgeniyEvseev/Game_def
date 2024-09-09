@@ -7,7 +7,7 @@
 #include "../../define.h"
 #include "fronted/define.h"
 
-void tetris_consol(const char* user_n) {
+void tetris_consol(const char* user_n, int argc, char* argv[]) {
   int flag_play = TRUE;
   Tetris data;
   char* path = "games/tetris/user_data.txt";
@@ -38,5 +38,3 @@ void tetris_consol(const char* user_n) {
     i++;
   }
 }
-
-void tetris(const char* user_n) {}
