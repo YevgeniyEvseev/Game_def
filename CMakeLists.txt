@@ -14,6 +14,8 @@ project(Game_def)
 find_package(Curses REQUIRED)
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
+find_package(Qt6 REQUIRED COMPONENTS OpenGLWidgets)
+
 
 include_directories(${CURSES_INCLUDE_DIR})
 
@@ -22,6 +24,9 @@ set(PROJECT_SOURCES
     games/tetris/QT_part/tetris/mainwindow.cpp
     games/tetris/QT_part/tetris/mainwindow.h
     games/tetris/QT_part/tetris/mainwindow.ui
+    games/tetris/QT_part/tetris/Ogl_painter.cpp
+    games/tetris/QT_part/tetris/Ogl_painter.h
+
     main.cpp
     games/sea_batle/sea_batle.cpp
     games/snake/QT_part/snake.cpp 
@@ -55,5 +60,6 @@ add_executable(Game_def ${PROJECT_SOURCES}
 
 target_link_libraries("${PROJECT_NAME}" ${CURSES_LIBRARIES})
 target_link_libraries("${PROJECT_NAME}" Qt6::Widgets)
+target_link_libraries("${PROJECT_NAME}" Qt6::OpenGLWidgets)
 
 
