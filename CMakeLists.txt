@@ -20,7 +20,7 @@ find_package(Qt6 REQUIRED COMPONENTS OpenGLWidgets)
 include_directories(${CURSES_INCLUDE_DIR})
 
 set(PROJECT_SOURCES
-    games/tetris/QT_part/tetris/major.cpp
+    games/tetris/QT_part/tetris/tetris_Qt.cpp
     games/tetris/QT_part/tetris/mainwindow.cpp
     games/tetris/QT_part/tetris/mainwindow.h
     games/tetris/QT_part/tetris/mainwindow.ui
@@ -31,14 +31,16 @@ set(PROJECT_SOURCES
     games/sea_batle/sea_batle.cpp
     games/snake/QT_part/snake.cpp 
     games/tanks/tank.cpp
-)
 
-add_executable(Game_def ${PROJECT_SOURCES}
-    # shared file
+     # shared file
     
     GUI/cli/menu.c
     lib/proc_files.c
     GUI/cli/interface_console.c
+)
+
+add_executable(Game_def ${PROJECT_SOURCES}
+   
     
     # tetris
     games/tetris/tetris.c

@@ -35,9 +35,15 @@ typedef enum {
   EXIT_STATE
 } state_game;
 
+#ifdef __cpudplus
+extern "C" {
+#endif
 int read_file(const char *user, char *PATH, int *offset);
 void save_file(GameInfo_t *data, char *PATH, const char *user,
                int new_high_score, int offset);
+#ifdef __cpudplus
+}
+#endif
 void int_to_str(int src, char *str);
 
 #endif

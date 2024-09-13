@@ -21,7 +21,7 @@ void updateCurrentState(Tetris *data, state_game *state, const char *user,
   switch (*state) {
     case START:
       spawn_new_figure(&data->new_figure);
-      render_info(data);
+      //  render_info(data);
       *state = SPAWN;
       break;
     case SPAWN:
@@ -31,7 +31,7 @@ void updateCurrentState(Tetris *data, state_game *state, const char *user,
         *state = GAMEOVER;
         return;
       }
-      render_info(data);
+      // render_info(data);
       *state = STANDBY;
       controler_game(data, state, KEY_UP);
       break;
@@ -55,11 +55,11 @@ void updateCurrentState(Tetris *data, state_game *state, const char *user,
       if (check_gameover(data)) *state = GAMEOVER;
       break;
     case PAUSE:
-      render_pause();
+      // render_pause();
       *state = STANDBY;
       break;
     case GAMEOVER:
-      render_game_over();
+      //render_game_over();
       *state = EXIT_STATE;
       break;
     case EXIT_STATE:
@@ -140,7 +140,8 @@ int check_intersection(Tetris *data) {
         if (d_i < 0) return LEFT_BOARD;
         if (d_i > 9) return RIGHT_BOARD;
         if (d_j > 19) return DOWN_BOARD;
-        if (data->cur_figure.data[i][j] == data->info.field[d_i][d_j]) return FIELD;
+        if (data->cur_figure.data[i][j] == data->info.field[d_i][d_j])
+          return FIELD;
       }
     }
   }

@@ -25,15 +25,19 @@ void tetris_consol(const char* user_n, int argc, char* argv[]) {
     updateCurrentState(&data, &state, user_n, input);
     if (state == EXIT_STATE) {
       flag_play = false;
+      render_game_over();
       save_file(&data.info, path, user_n, data.info.score, offset_char_in_file);
     }
-
+    if (state == PAUSE) {
+      render_pause();
+    }
     if (data.info.speed * 10 == i) {
       i = 0;
       state = SHIFTING;
       updateCurrentState(&data, &state, user_n, input);
     }
     render_field(&data);
+    render_info(&data);
     nanosleep(&ts, NULL);
     i++;
   }

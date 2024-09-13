@@ -44,3 +44,4 @@ void render_info(Tetris *data) {
   render_figure(&data->new_figure);
   print_info(&data->info);
 }
+
