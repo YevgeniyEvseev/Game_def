@@ -131,7 +131,7 @@ void render_figure_to_field(Snake_t *data) {
 }
 
 void controler_game_snake(Snake_t *data, state_game *state, int input) {
-  switch (userInput(input)) {
+  switch (userInput_consol(input)) {
     case TERMINATE:
       *state = GAMEOVER;
       break;

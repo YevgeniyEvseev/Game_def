@@ -19,10 +19,12 @@ class MainWindow : public QMainWindow {
 
  public:
   MainWindow(QWidget *parent = nullptr);
+  // void tetris_game(const char *user_n);
   ~MainWindow();
 
  private:
   OGL_painter *new_painter;
+  // Tetris* data;
   Ui::MainWindow *ui;
 };
 

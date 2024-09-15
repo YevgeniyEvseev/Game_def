@@ -59,7 +59,7 @@ void updateCurrentState(Tetris *data, state_game *state, const char *user,
       *state = STANDBY;
       break;
     case GAMEOVER:
-      //render_game_over();
+      // render_game_over();
       *state = EXIT_STATE;
       break;
     case EXIT_STATE:
@@ -88,7 +88,7 @@ void spawn_new_figure(figure *fig) {
 void controler_game(Tetris *data, state_game *state, int input) {
   int old_offset_x = data->cur_figure.x_offset;
   int old_offset_y = data->cur_figure.y_offset;
-  switch (userInput(input)) {
+  switch (userInput_consol(input)) {
     case TERMINATE:
       *state = GAMEOVER;
       break;

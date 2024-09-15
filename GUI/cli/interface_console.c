@@ -68,7 +68,7 @@ void render_pause() {
   mvprintw(BOARD + 8, 5, "     ");
 }
 
-UserAction_t userInput(int action) {
+UserAction_t userInput_consol(int action) {
   UserAction_t rc = NOSIG;
 
   if (action == KEY_UP)

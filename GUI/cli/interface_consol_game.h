@@ -9,6 +9,6 @@ void draw_rectangle(int top, int bottom, int left, int right);
 void print_info(GameInfo_t *info);
 void render_game_over();
 void render_pause();
-UserAction_t userInput(int action);
+UserAction_t userInput_consol(int action);
 
 #endif
